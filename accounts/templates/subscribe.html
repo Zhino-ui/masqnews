@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-4">
+                <h1 class="alert alert-success">You have subscribed to our newsletter. Thank you!!!</h1>
+                <a class="btn btn-warning text-dark" href="{% url 'homepage' %}">Read News</a>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}

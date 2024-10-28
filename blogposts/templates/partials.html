@@ -1,0 +1,105 @@
+{% load static %}
+
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Follow Us</h4>
+    </div>
+    <div class="bg-white border border-top-0 p-3">
+        <a href="" class="d-block w-100 text-white text-decoration-none mb-3" style="background: #39569E;">
+            <i class="fab fa-facebook-f text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Fans</span>
+        </a>
+        <a href="" class="d-block w-100 text-white text-decoration-none mb-3" style="background: #52AAF4;">
+            <i class="fab fa-twitter text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Followers</span>
+        </a>
+        <a href="" class="d-block w-100 text-white text-decoration-none mb-3" style="background: #0185AE;">
+            <i class="fab fa-linkedin-in text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Connects</span>
+        </a>
+        <a href="" class="d-block w-100 text-white text-decoration-none mb-3" style="background: #C8359D;">
+            <i class="fab fa-instagram text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Followers</span>
+        </a>
+        <a href="" class="d-block w-100 text-white text-decoration-none mb-3" style="background: #DC472E;">
+            <i class="fab fa-youtube text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Subscribers</span>
+        </a>
+        <a href="" class="d-block w-100 text-white text-decoration-none" style="background: #055570;">
+            <i class="fab fa-vimeo-v text-center py-4 mr-3" style="width: 65px; background: rgba(0, 0, 0, .2);"></i>
+            <span class="font-weight-medium">12,345 Followers</span>
+        </a>
+    </div>
+</div>
+<!-- Social Follow End -->
+
+<!-- Ads Start -->
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Advertisement</h4>
+    </div>
+    <div class="bg-white text-center border border-top-0 p-3">
+        <a href=""><img class="img-fluid" src="{% static "img/news-800x500-2.jpg" %}" alt=""></a>
+    </div>
+</div>
+<!-- Ads End -->
+
+<!-- Popular News Start -->
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Trending News</h4>
+    </div>
+    <div class="bg-white border border-top-0 p-3">
+        {% for item in latest_articles %}
+                <div class="d-flex align-items-center bg-white mb-3" style="height: 120px;">
+                    <img class="img-fluid" style="height: 110px;width:110px;object-fit:cover;" src="{{item.image.url}}" alt="">
+                    <div class="w-100 h-100 px-3 d-flex flex-column justify-content-center border border-left-0">
+                        <div class="mb-2">
+                            <a class="badge badge-primary text-uppercase font-weight-semi-bold p-1 mr-2" href="{% url 'category_page' slug=item.category.slug %}">{{item.category}}</a>
+                            <a class="text-body" href="{% url 'blog_item' pk=item.pk %}"><small>{{item.published_date}}</small></a>
+                        </div>
+                        <a class="h6 m-0 text-secondary text-uppercase font-weight-bold" href="{% url 'blog_item' pk=item.pk %}">{{item.title|truncatewords:5}}.</a>
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+</div>
+<!-- Popular News End -->
+
+<!-- Newsletter Start -->
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Newsletter</h4>
+    </div>
+    <div class="bg-white text-center border border-top-0 p-3">
+        <p>Subscribe to our newsletter for latest news.</p>
+        <form method="POST" action="{% url 'subscribe' %}">
+            {% csrf_token %}
+            <div class="input-group mb-2" style="width: 100%;">
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="Your Email" value="{{ form.email.value|default_if_none:'' }}">
+                <div class="input-group-append">
+                    <button class="btn btn-primary font-weight-bold px-3" type="submit">Sign Up</button>
+                </div>
+            </div>
+        </form>
+        <small>Stay updated with masqnews</small>
+    </div>
+</div>
+<!-- Newsletter End -->
+
+<!-- Tags Start -->
+<div class="mb-3">
+    <div class="section-title mb-0">
+        <h4 class="m-0 text-uppercase font-weight-bold">Tags</h4>
+    </div>
+    <div class="bg-white border border-top-0 p-3">
+        {% for category in categories %}
+            {% if category.slug %}
+                <a class="btn btn-sm btn-transparent text-dark m-1 border border-primary rounded p-2" href="{% url 'category_page' category.slug %}">{{ category.name }}</a>
+            {% else %}
+                <a >{{ category.name }} (No Link - Missing Slug)</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<!-- Tags End -->
